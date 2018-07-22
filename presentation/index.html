@@ -114,6 +114,8 @@ for ^10_000_000 {
 						<li>Use native types</li>
             <li>Use the built-in profiler</li>
 					</ul>
+
+          <p style="padding-top: 20px">Also, <a href="https://github.com/rakudo/rakudo/issues/new">bug-report really slow stuff</a>.</p>
 				</section>
 
 				<section>
@@ -129,12 +131,10 @@ for ^10_000_000 {
 				<section>
 					<h2>Keep it simple</h2>
 
-					<p>Do you <i>really</i> need all those type checks?
-						<br>Many of them are done at runtime.</p>
+					<p>Do you <i>really</i> need all those type checks?</p>
 
 					<pre><code class="perl">
-multi rev-cos (Num $v) { $v.flip.cos }
-multi rev-cos (
+sub rev-cos (
     *@stuff where .all ~~ Num|Int|Rat --> Array[Num]
 ) {
     Array[Num].new: @stuff.map: *.flip.cos
@@ -145,16 +145,30 @@ rev-cos ^100_000; # 3.86 seconds
 </code></pre>
 				</section>
 
+        <section>
+          <h2>Keep it simple</h2>
+
+          <p>The dynamic optimizer will cheapen or even remove some of the
+            type checks, but things like <code>where</code> refinements and
+            conversion of <code>Seq</code> type (returned from <code>.map</code>) to an <code>Array</code> have cost</p>
+
+					<pre><code class="perl">
+… *@stuff where .all ~~ Num|Int|Rat …
+
+Array[Num].new: …
+
+</code></pre>
+				</section>
+
 				<section>
 					<h2>Keep it simple</h2>
 
-					<p>A lot less code. Nearly the same functionality.
-					<br>Stuff that can't be <code>.flip.cos</code>ed will throw
-					automatically.</p>
+					<p>Almost the same functionality, but the code is now shorter
+            and 2.7x as fast:</p>
 
 					<pre><code class="perl">
-sub rev-cos { @_.map: *.flip.cos }
-rev-cos ^100_000; # 1.42 seconds
+sub rev-cos (*@stuff) { @stuff.map: *.flip.cos }
+rev-cos ^100_000; # 1.43 seconds
 
 </code></pre>
 				</section>
