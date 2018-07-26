@@ -65,6 +65,16 @@
 				</section>
 
 				<section>
+				  <h2>Question Policy</h2>
+
+					<p>Just raise your hand and ask right away</p>
+				</section>
+
+				<section>
+					<h2>Is Perl 6 Slow?</h2>
+				</section>
+
+				<section>
 					<h2>Perl 6 Is New</h2>
 
 					<ul>
@@ -96,6 +106,7 @@ for ^10_000_000 {
 # 2018.06:  81 seconds
 # 2018.07:  .5 seconds
 					</code></pre>
+          <p>161x faster</p>
 				</section>
 
 				<section>
@@ -289,6 +300,7 @@ calc 50_000 for ^1000_000;
 # A MILLION calculations: 0.93 seconds
 
 </code></pre>
+          <p>20x faster</p>
         </section>
 
         <section>
@@ -303,6 +315,7 @@ calc 50_000 for ^1000_000;
 # Run time: 0.32 seconds
 
 </code></pre>
+          <p>61x faster</p>
         </section>
 
         <section>
@@ -336,7 +349,7 @@ $x ~~ /^foo/ for ^1000_000;
 my $x = "foo bar ber";
 $x.starts-with: 'foo' for ^1000_000;
 
-# 0.12 seconds
+# 0.12 seconds (76x faster)
 
 </code></pre>
 
@@ -450,6 +463,7 @@ my int $i;
 my     $x = -42; $x.abs for ^1000_000; # 0.29 seconds
 my int $x = -42; $x.abs for ^1000_000; # 0.48 seconds
           </code></pre>
+          <p>60% slower</p>
         </section>
 
         <section>
@@ -461,6 +475,7 @@ my int $x = -42; $x.abs for ^1000_000; # 0.48 seconds
 my     $x = -42; $x.abs for ^1000_000; # 0.29 seconds
 my int $x = -42; abs $x for ^1000_000; # 0.08 seconds
           </code></pre>
+          <p>260% faster</p>
         </section>
 
 
